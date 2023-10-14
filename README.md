@@ -233,3 +233,11 @@ export default async function Home() {
     )
 }
 ```
+
+## 6 Medhot Redirect
+```
+import { redirect } from 'next/navigation'
+export default async function Article() {
+    redirect('/')
+}
+```
