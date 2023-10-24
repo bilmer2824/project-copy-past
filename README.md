@@ -1,7 +1,7 @@
 # Class Number
 
 ## 1 Method
-```
+```js
 function numberSum(N) {
     var total = 0;
     for (var i = 1; i <= N; i++) {
@@ -14,7 +14,7 @@ console.log(numberSum(100));
 // answer 5050
 ```
 ## 2 Method
-```
+```js
 var total = 0;
 for (var i = 1; i <= 100; i++) {
     total += i;
@@ -25,7 +25,7 @@ console.log(total);
 ```
 
 ## 3 Method
-```
+```js
 const numSum = (n) => n * (n + 1) / 2;
 console.log(numSum(100));
 
@@ -33,7 +33,7 @@ console.log(numSum(100));
 ```
 
 ## 4 Method
-```
+```js
 var sum = 0;
 for (var i = 1; i <= 100; i += 2) {
     sum += i;
@@ -44,7 +44,7 @@ console.log(sum);
 ```
 
 ## 5 Method
-```
+```js
 function sumOddEven(n) {
     const floor = Math.floor(n / 2);
     const ceil = Math.ceil(n / 2);
@@ -56,7 +56,7 @@ console.log(sumOddEven(100)[1], sumOddEven(100)[0])
 ```
 
 ## 6 Method
-```
+```js
 let even_sum = 0;
 let odd_sum = 0;
 for (let i = 0; i <= 100; i++) {
@@ -71,14 +71,14 @@ console.log(even_sum, odd_sum)
 ```
 
 ## 7 Method
-```
+```js
 m = [0, 0]; for (i = 0; i < 101; i++) m[i % 2] += i; console.log(m[0], m[1]);
 
 // answer 2550 2500
 ```
 
 ## 8 Method
-```
+```js
 let maz = 0, kaz = 0;
 for (let i = 0; i <= 100; i++) if (i % 2 == 0) maz += i; else kaz += i; console.log(maz, kaz);
 
@@ -86,7 +86,7 @@ for (let i = 0; i <= 100; i++) if (i % 2 == 0) maz += i; else kaz += i; console.
 ```
 
 ## 9 Method
-```
+```js
 let maz = 0, kaz = 0;
 function learnJavaScript(f) {
     let count = 0
@@ -104,7 +104,7 @@ console.log(learnJavaScript(100));
 
 ## 1 Method
 
-```
+```html
 <Button
     style={{
         borderRadius: 35,
@@ -121,7 +121,7 @@ console.log(learnJavaScript(100));
 # Time Medhod
 
 ## 1 Medhod
-```
+```js
 let number = 0;
 
 function updateClock() {
@@ -154,7 +154,7 @@ updateClock();
 
 ## 2 Medhod 
 
-```
+```js
 let number = 0;
 
 function Time() {
@@ -181,7 +181,7 @@ Time();
 ```
 
 ## 3 Medhod
-```
+```js
 function updateTime() {
     const now = new Date();
     const hours = String(now.getHours()).padStart(2, '0');
@@ -197,7 +197,7 @@ setInterval(updateTime, 1000); // Vaqt o'zgarishini har 1 sekundda yangilash
 updateTime();
 ```
 ## 4 Medhod Parallax
-```
+```js
 attribute: data-speed="2.5"
 function:
 let img = document.querySelector(".images")
@@ -211,7 +211,7 @@ window.addEventListener("scroll", () =>{
 ```
 
 ## 4 Medhot Revalidate
-```
+```js
 async function getData() {
     const res = await fetch('https://bilmervipapi.pythonanywhere.com/next_api/all-news/', { next: { revalidate: 3 } }, { cache: 'no-store' })
     if (!res.ok) {
@@ -235,9 +235,32 @@ export default async function Home() {
 ```
 
 ## 6 Medhot Redirect
-```
+```js
 import { redirect } from 'next/navigation'
 export default async function Article() {
     redirect('/')
 }
+```
+
+
+## 7
+```js
+let str = 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Consequuntur nemo nobis voluptatum impedit aspernatur eum laudantium temporibus, dolorem facilis '
+
+let vowels = "";
+let consonants = "";
+for (let i = 0; i < str.length; i++) {
+    let letter = str[i].toLowerCase();
+    if ("aeiou".includes(letter)) {
+        vowels += letter;
+    } else if (letter >= "a" && letter <= "z") {
+        consonants += letter;
+    }
+}
+
+let unli = vowels.length
+let undosh = consonants.length
+console.log(
+    unli, undosh, vowels, consonants
+);
 ```
