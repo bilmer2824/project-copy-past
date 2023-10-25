@@ -243,7 +243,7 @@ export default async function Article() {
 ```
 
 
-## 7
+## 7 Medhot Text Length
 ```js
 let str = 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Consequuntur nemo nobis voluptatum impedit aspernatur eum laudantium temporibus, dolorem facilis '
 
@@ -263,4 +263,177 @@ let undosh = consonants.length
 console.log(
     unli, undosh, vowels, consonants
 );
+```
+
+## Medhot Category filter
+
+### html
+
+```html
+<div>
+    <button class="button-class" data-category="all">all</button>
+    <button class="button-class" data-category="app">app</button>
+    <button class="button-class" data-category="website">website</button>
+    <button class="button-class" data-category="design">design</button>
+</div>
+<div id="product-container"></div>
+```
+
+
+### class version
+
+
+
+
+```js
+
+class Product {
+    constructor(id, name, category) {
+        this.id = id;
+        this.name = name;
+        this.category = category;
+    }
+    createProductElement() {
+        const productElement = document.createElement('div');
+        productElement.className = "bilmer";
+        productElement.id = this.id;
+        productElement.innerHTML = `
+            <h3>${this.name}</h3>
+            <p>Category: ${this.category}</p>
+        `;
+        return productElement;
+    }
+}
+class ProductManager {
+    constructor(products, productContainer) {
+        this.products = products;
+        this.productContainer = productContainer;
+        this.unrepeatable = [];
+
+        // Add click event listeners to category buttons
+        categoryButtons.forEach(button => {
+            button.addEventListener('click', (e) => {
+                const data_category = e.target.getAttribute("data-category");
+                if (data_category === "all") {
+                    this.displayAllProducts();
+                } else {
+                    this.displayFilteredProducts(data_category);
+                }
+            });
+        });
+        this.displayAllProducts();
+    }
+
+    displayAllProducts() {
+        this.clearProductContainer();
+        this.unrepeatable.length = 0;
+        this.products.forEach(product => {
+            if (!this.unrepeatable.includes(product.id)) {
+                this.unrepeatable.push(product.id);
+                const productElement = product.createProductElement();
+                this.productContainer.appendChild(productElement);
+            }
+        });
+    }
+
+    displayFilteredProducts(category) {
+        this.clearProductContainer();
+        this.unrepeatable.length = 0;
+        const filteredProducts = this.products.filter(product => product.category === category);
+        filteredProducts.forEach(product => {
+            if (!this.unrepeatable.includes(product.id)) {
+                this.unrepeatable.push(product.id);
+                const productElement = product.createProductElement();
+                this.productContainer.appendChild(productElement);
+            }
+        });
+    }
+
+    clearProductContainer() {
+        this.productContainer.innerHTML = "";
+    }
+}
+const products = [
+    new Product(1, 'Product A', 'app'),
+    new Product(2, 'Product B', 'website'),
+    new Product(3, 'Product C', 'design'),
+    new Product(4, 'Product D', 'design')
+];
+const productContainer = document.getElementById('product-container');
+const categoryButtons = document.querySelectorAll('.button-class');
+new ProductManager(products, productContainer);
+
+```
+
+### function version 
+
+```js
+const products = [
+    { id: 1, name: 'Product A', category: 'app' },
+    { id: 2, name: 'Product B', category: 'website' },
+    { id: 3, name: 'Product C', category: 'design' },
+    { id: 4, name: 'Product D', category: 'app' },
+    { id: 5, name: 'Product F', category: 'design' },
+    { id: 6, name: 'Product G', category: 'website' },
+    { id: 7, name: 'Product H', category: 'app' },
+    { id: 8, name: 'Product J', category: 'design' },
+    { id: 9, name: 'Product K', category: 'app' },
+    { id: 10, name: 'Product L', category: 'website' },
+];
+const categoryButtons = document.querySelectorAll('.button-class');
+const productContainer = document.getElementById('product-container');
+const unrepeatable = [];
+products.forEach(product => {
+    const productElement = document.createElement('div');
+    productElement.className = "bilmer";
+    productElement.id = product.id
+    productElement.innerHTML = `
+        <h3>${product.name}</h3>
+        <p>Category: ${product.category}</p>
+    `;
+});
+categoryButtons.forEach(button => {
+    button.addEventListener('click', (e) => {
+        const data_category = e.target.getAttribute("data-category");
+        if (data_category === "all") {
+            displayAllProducts();
+        } else {
+            displayFilteredProducts(data_category);
+        }
+    });
+});
+displayAllProducts();
+async function displayAllProducts() {
+    productContainer.innerHTML = "";
+    unrepeatable.length = 0;
+    products.forEach(product => {
+        if (!unrepeatable.includes(product.id)) {
+            unrepeatable.push(product.id);
+            const productElement = createProductElement(product);
+            productContainer.appendChild(productElement);
+        }
+    });
+}
+function displayFilteredProducts(category) {
+    productContainer.innerHTML = "";
+    unrepeatable.length = 0;
+    const filteredProducts = products.filter(product => product.category === category);
+    filteredProducts.forEach(product => {
+        if (!unrepeatable.includes(product.id)) {
+            unrepeatable.push(product.id);
+            const productElement = createProductElement(product);
+            productContainer.appendChild(productElement);
+        }
+    });
+}
+function createProductElement(product) {
+    const productElement = document.createElement('div');
+    productElement.className = "bilmer";
+    productElement.id = product.id
+    productElement.innerHTML = `
+        <h3>${product.name}</h3>
+        <p>Category: ${product.category}</p>
+    `;
+    return productElement;
+}
 ```
