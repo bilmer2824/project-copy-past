@@ -437,3 +437,89 @@ function createProductElement(product) {
     return productElement;
 }
 ```
+
+
+## Medhot Category filter
+
+```js
+async function saved_localstorage() {
+    const localBasket = []
+    try {
+        const res = await fetch('https://portfoliobilmer.pythonanywhere.com/api/v5/portfolio-data/');
+        if (!res.ok) throw new Error(`Failed to fetch data: ${res.status} ${res.statusText}`);
+        const data = await res.json();
+        data.forEach(e => {
+            if (!localBasket.includes(e.id)) {
+                localBasket.push({
+                    id: e.id,
+                    uploader_name: e.uploader_name,
+                    portfolio_title: e.portfolio_title,
+                    portfolio_text: e.portfolio_text,
+                    portfolio_link: e.portfolio_link,
+                    portfolio_img: e.portfolio_img,
+                    portfolio_video_url: e.portfolio_video_url,
+                    portfolio_data: e.portfolio_data,
+                    portfolio_slug: e.portfolio_slug,
+                    portfolio_category_id: e.portfolio_category,
+                    portfolio_category_name: e.portfolio_category_slug.slug
+                })
+                localStorage.setItem(`portfolio`, JSON.stringify(localBasket))
+            }
+        });
+    } catch (error) {
+        throw new Error(`Error fetching data: ${error.message}`);
+    }
+}
+saved_localstorage()
+
+
+const btns = document.querySelectorAll('.button-class');
+const container = document.getElementById('product-container');
+const dataString = localStorage.getItem('portfolio');
+const data = JSON.parse(dataString);
+
+async function displayFilteredData(category) {
+    container.innerHTML = "";
+    data.forEach(element => {
+        if (category === "all" || element.portfolio_category_name === category) {
+            const truncateString = (string = '', maxLength = 50) =>
+                string.length > maxLength
+                    ? `${string.substring(0, maxLength)}…`
+                    : string;
+            const text = truncateString(element.portfolio_text, 15);
+            const productElement = document.createElement('div');
+            productElement.className = "bilmer";
+            productElement.id = element.id;
+            productElement.innerHTML = `
+                <p>ID: ${element.id}</p>
+                <p>Uploader Name: ${element.uploader_name}</p>
+                <p>Category Name: ${element.portfolio_category_name}</p>
+            `;
+            container.appendChild(productElement);
+        }
+    });
+}
+
+btns.forEach(element => {
+    element.addEventListener('click', (e) => {
+        const category = e.target.getAttribute("data-category");
+        displayFilteredData(category);
+    });
+});
+
+async function home() {
+    container.innerHTML = "";
+    data.forEach(element => {
+        const productElement = document.createElement('div');
+        productElement.className = "bilmer";
+        productElement.id = element.id;
+        productElement.innerHTML = `
+                <p>ID: ${element.id}</p>
+                <p>Uploader Name: ${element.uploader_name}</p>
+                <p>Category Name: ${element.portfolio_category_name}</p>
+            `;
+        container.appendChild(productElement);
+    });
+}
+home()
+```
