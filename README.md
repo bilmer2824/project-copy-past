@@ -265,7 +265,7 @@ console.log(
 );
 ```
 
-## Medhot Category filter
+## 8 Medhot Category filter
 
 ### html
 
@@ -439,7 +439,7 @@ function createProductElement(product) {
 ```
 
 
-## Medhot Category filter
+## 9 Medhot Category filter
 
 ```js
 async function saved_localstorage() {
@@ -522,4 +522,62 @@ async function home() {
     });
 }
 home()
+```
+
+## 10 Medhot class
+
+```js
+class MyNumber {
+    constructor() {
+        this.data = null;
+        this.btns = document.querySelectorAll('.button-class');
+        this.container = document.getElementById('product-container')
+        this.get_information();
+        this.click_parse();
+    }
+
+    async get_information() {
+        try {
+            const response = await fetch('https://portfoliobilmer.pythonanywhere.com/api/v5/portfolio-data/');
+            const data = await response.json();
+            this.data = data;
+        } catch (error) {
+            console.error('Error:', error);
+        }
+    }
+    async click_parse() {
+        this.btns.forEach(element => {
+            element.addEventListener("click", (e) => {
+                this.categoryName = e.target.getAttribute('data-category');
+                this.html_information();
+            });
+        });
+    }
+
+    async html_information() {
+        let count_bilmer = 0;
+        if (this.data) {
+            this.container.innerHTML = '';
+            this.data.forEach(el => {
+                if (this.categoryName === "all" || el.portfolio_category_slug.slug === this.categoryName) {
+                    const bilmer = document.createElement('div');
+                    bilmer.className = 'bilmer';
+                    bilmer.id = 'unique-div';
+                    bilmer.innerHTML = `
+                        <p>${el.uploader_name}</p>
+                        <p>${el.portfolio_title}</p>
+                        <a href="${el.portfolio_link}">Link</a>
+                        <img src="${el.portfolio_img}" />
+                        <p>${el.portfolio_slug}</p>
+                        <p></p>
+                    `;
+                    this.container.appendChild(bilmer);
+                    count_bilmer++;
+                }
+            });
+        }
+    }
+
+}
+const myInstance = new MyNumber()
 ```
