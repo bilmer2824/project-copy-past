@@ -609,5 +609,56 @@ return (
 
 ## Medhot 2
 ```js
+document.addEventListener('DOMContentLoaded', function () {
+    const nav_bt = document.querySelector('.nav');
+    const header_bt = document.querySelector('.header');
+    const header = document.getElementById('header');
+
+    window.addEventListener('scroll', function () {
+        const navHeight = nav_bt.offsetHeight; // or nav_bt.clientHeight
+        const headerHeight = header_bt.offsetHeight; // or header_bt.clientHeight
+
+        const scrollPosition = window.scrollY;
+        const offset = navHeight + headerHeight;
+
+        if (scrollPosition > offset) {
+            header.style.backgroundColor = 'lightcoral';
+        } else {
+            header.style.backgroundColor = 'lightblue';
+        }
+    });
+});
+```
+<img src="https://github.com/islamovsabit/oline-market-code/assets/147802380/b9b4bd1a-a48c-466f-85bb-eec31fd81ed1"  width="100%" />
+<img src="https://github.com/islamovsabit/oline-market-code/assets/147802380/39ac37b9-d66a-4f2f-9e45-2970e5d87edb"  width="100%" />
+
+## Medhot 3
+```js
+
+class ScrollEffect {
+    constructor() {
+        this.header = document.getElementById('header');
+        this.header_bt = document.querySelector('.header')
+        this.nav_bt = document.querySelector('.nav')
+        
+        this.scrollOffset = this.header_bt.offsetHeight + this.nav_bt.offsetHeight
+        this.updateHeaderColor();
+        window.addEventListener('scroll', () => this.updateHeaderColor());
+    }
+    updateHeaderColor() {
+        const scrollPosition = window.scrollY;
+        if (scrollPosition > this.scrollOffset) {
+            this.header.style.backgroundColor = 'lightcoral';
+        } else {
+            this.header.style.backgroundColor = 'lightblue';
+        }
+    }
+}
+
+document.addEventListener('DOMContentLoaded', function () {
+    const scrollEffect = new ScrollEffect();
+});
 
 ```
+
+
