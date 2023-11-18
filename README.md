@@ -581,3 +581,33 @@ class MyNumber {
 }
 const myInstance = new MyNumber()
 ```
+
+
+# Scroll Effect React
+
+## Medhot 1
+```js
+const [scrollPosition, setScrollPosition] = useState(0);
+useEffect(() => {
+    const handleScroll = () => {
+    setScrollPosition(window.scrollY);
+};
+    window.addEventListener('scroll', handleScroll);
+    return () => {
+        window.removeEventListener('scroll', handleScroll);
+    };
+}, []);
+console.log(scrollPosition);
+
+return (
+    <>
+        <div className='element-scroll-top'></div>
+        <div className={`element-scroll-bottom ${scrollPosition > 300 ? "active" : ""}`}></div>
+    </>
+);
+```
+
+## Medhot 2
+```js
+
+```
