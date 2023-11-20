@@ -661,4 +661,23 @@ document.addEventListener('DOMContentLoaded', function () {
 
 ```
 
+# API fetch
 
+## Medhot 1
+```python
+import requests
+
+api_key = '855eb59e3593f561ff2838fa1f8c67500151ed54d9eec7bb9b7db46e25a5c640'
+search_query = input("Search Term:")
+yandex_domain = 'yandex.uz'
+url = f'https://serpapi.com/search?engine=yandex_images&api_key={api_key}&text={search_query}&yandex_domain={yandex_domain}'
+response = requests.get(url)
+data = response.json()['images_results']
+data_bt = response.json()
+for i in data:
+    print(i['thumbnail'])
+
+```
+run
+
+<img src="https://github.com/islamovsabit/project-turon-university/assets/147802380/aa42955b-0822-4884-bf43-0b4884fbdc76" />
