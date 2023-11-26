@@ -681,3 +681,154 @@ for i in data:
 run
 
 <img src="https://github.com/islamovsabit/project-turon-university/assets/147802380/aa42955b-0822-4884-bf43-0b4884fbdc76" />
+
+# Product Design
+
+## Medhot 1
+```html
+<div id="product-list">
+        <!-- Product List -->
+        <div class="product" data-id="1" data-name="Product 1" data-price="20.00">
+            <h2>Product 1</h2>
+            <p>$20.00</p>
+            <button class="button_add" onclick="addToCart(1)">Add to Cart</button>
+        </div>
+
+        <div class="product" data-id="2" data-name="Product 2" data-price="30.00">
+            <h2>Product 2</h2>
+            <p>$30.00</p>
+            <button class="button_add" onclick="addToCart(2)">Add to Cart</button>
+        </div>
+
+        <div class="product" data-id="3" data-name="Product 3" data-price="45.00">
+            <h2>Product 3</h2>
+            <p>$45.00</p>
+            <button class="button_add" onclick="addToCart(3)">Add to Cart</button>
+        </div>
+
+        <div class="product" data-id="4" data-name="Product 4" data-price="150.00">
+            <h2>Product 4</h2>
+            <p>$150.00</p>
+            <button class="button_add" onclick="addToCart(4)">Add to Cart</button>
+        </div>
+    </div>
+```
+
+```js
+<script>
+        let cart = [];
+        let totalSum = 0;
+        window.onload = function () {
+            const storedCart = JSON.parse(localStorage.getItem('cart')) || [];
+            cart = storedCart;
+            totalSum = parseFloat(localStorage.getItem('totalSum')) || 0;
+            updateCart();
+            updateButtonStates();
+        };
+
+        function isProductInCart(productId) {
+            return cart.some(item => item.id === productId);
+        }
+
+        function addToCart(productId) {
+            if (isProductInCart(productId)) {
+                return;
+            }
+
+            const product = document.querySelector(`.product[data-id="${productId}"]`);
+            const cartItem = {
+                id: productId,
+                name: product.dataset.name,
+                price: parseFloat(product.dataset.price),
+            };
+
+            cart.push(cartItem);
+            totalSum += cartItem.price;
+            localStorage.setItem('cart', JSON.stringify(cart));
+            localStorage.setItem('totalSum', totalSum.toString());
+            updateCart();
+            const addButton = product.querySelector('.button_add');
+            addButton.disabled = true;
+            addButton.classList.add('button_added');
+        }
+
+        function removeFromCart(index) {
+            const removedItem = cart.splice(index, 1)[0];
+            totalSum -= removedItem.price;
+            localStorage.setItem('cart', JSON.stringify(cart));
+            localStorage.setItem('totalSum', totalSum.toString());
+            updateCart();
+            const productId = removedItem.id;
+            updateButtonStates(productId);
+        }
+
+        function updateButtonStates(productId) {
+            const buttonToUpdate = document.querySelector(`.product[data-id="${productId}"] .button_add`);
+
+            if (buttonToUpdate) {
+                buttonToUpdate.disabled = false;
+                buttonToUpdate.classList.remove('button_added');
+            }
+        }
+
+        function updateCart() {
+            const cartContainer = document.getElementById('cart');
+            cartContainer.innerHTML = `<h3 class="total_bs">Total: $${totalSum.toFixed(2)}</h3>`;
+
+            cart.forEach((item, index) => {
+                const cartItem = document.createElement('div');
+                cartItem.classList.add('cart-item');
+                cartItem.innerHTML = `
+                <h3>${item.name}</h3>
+                <p>$${item.price.toFixed(2)}</p>
+                <button onclick="removeFromCart(${index})">Remove</button>
+            `;
+                cartContainer.appendChild(cartItem);
+            });
+        }
+    </script>
+```
+
+# Todo List
+
+## Medhot 1
+```html
+<form id="todoList">
+        <h2>Todo List</h2>
+        <input type="text" id="taskInput" placeholder="New task...">
+        <button onclick="addTask(event)">Add</button>
+
+        <ul id="tasksList"></ul>
+        <button id="removeAll" onclick="removeAllTasks()">Remove All</button>
+    </form>
+```
+```js
+function addTask(e) {
+    e.preventDefault(); // Corrected typo
+    var taskInput = document.getElementById("taskInput");
+    var taskText = taskInput.value.trim();
+    if (taskText === "") {
+        alert("Please enter a task!");
+        return;
+    }
+    var tasksList = document.getElementById("tasksList");
+    var li = document.createElement("li");
+    li.innerHTML = `
+    <span>${taskText}</span>
+    <button onclick="removeTask(this)">Remove</button>
+  `;
+    tasksList.appendChild(li);
+    taskInput.value = "";
+}
+function removeTask(button, e) {
+    e.preventDefault();
+    var li = button.parentNode;
+    var ul = li.parentNode;
+    ul.removeChild(li);
+}
+function removeAllTasks(e) {
+    e.preventDefault();
+    var tasksList = document.getElementById("tasksList");
+    tasksList.innerHTML = ""; // Clear the entire list
+}
+```
